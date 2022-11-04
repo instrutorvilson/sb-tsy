@@ -20,8 +20,20 @@ public class CategoriaController {
          return ResponseEntity.status(HttpStatus.OK).body(categoriaService.consultar());
      }
 
+     @GetMapping("/{idcategoria}")
+     public ResponseEntity<Categoria> consultarById(@PathVariable("idcategoria") long idcategoria){
+         return ResponseEntity.status(HttpStatus.OK).body(categoriaService.consultarById(idcategoria));
+     }
+
      @PostMapping
-    public ResponseEntity<Categoria> salvar(@RequestBody Categoria categoria){
+     public ResponseEntity<Categoria> salvar(@RequestBody Categoria categoria){
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaService.salvar(categoria));
      }
+
+     @PutMapping("/{idcategoria}")
+    public ResponseEntity<Categoria> alterar(@PathVariable("idcategoria") long idcategoria,
+                                             @RequestBody Categoria categoria){
+         return ResponseEntity.status(HttpStatus.OK).body(categoriaService.alterar(idcategoria, categoria));
+     }
+
 }
