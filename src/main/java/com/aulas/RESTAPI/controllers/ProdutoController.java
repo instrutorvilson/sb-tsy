@@ -37,6 +37,12 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.OK).body(service.alterar(idproduto, produto));
     }
 
+    @DeleteMapping("/{idproduto}")
+    public ResponseEntity<Void> excluir(@PathVariable("idproduto") Long idproduto) {
+         service.excluir(idproduto);
+         return ResponseEntity.noContent().build();
+    }
+
   /*
     @Autowired
     ProdutoRepository repo;

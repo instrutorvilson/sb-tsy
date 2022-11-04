@@ -46,6 +46,10 @@ public class ProdutoService {
 
         return this.salvar(prod);
     }
-
+    @Transactional
+    public void excluir(Long idproduto){
+        Produto prod = this.consultarById(idproduto);
+        produtoRepository.delete(prod);
+    }
 
 }
