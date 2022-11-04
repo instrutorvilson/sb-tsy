@@ -1,6 +1,8 @@
 package com.aulas.RESTAPI.controllers;
 
 import com.aulas.RESTAPI.entidades.Produto;
+import com.aulas.RESTAPI.repositories.ProdutoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/produtos") //http://localhost:8080/produtos
 public class ProdutoController {
+
+    @Autowired
+    ProdutoRepository repo;
 
     @GetMapping
     public String ola(){
@@ -26,7 +31,8 @@ public class ProdutoController {
 
     @PostMapping
     public ResponseEntity<Produto> salvar(@RequestBody Produto produto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(produto);
+        Produto prod = repo.save(produto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(prod);
     }
 
     @PutMapping("/{idproduto}")
