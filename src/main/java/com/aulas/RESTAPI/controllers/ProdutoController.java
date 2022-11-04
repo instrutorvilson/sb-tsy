@@ -2,6 +2,7 @@ package com.aulas.RESTAPI.controllers;
 
 import com.aulas.RESTAPI.entidades.Produto;
 import com.aulas.RESTAPI.repositories.ProdutoRepository;
+import com.aulas.RESTAPI.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,25 @@ import java.util.List;
 @RestController
 @RequestMapping("/produtos") //http://localhost:8080/produtos
 public class ProdutoController {
+
+    @Autowired
+    ProdutoService service;
+    @GetMapping
+    public ResponseEntity<List<Produto>> consultarProdutos(){
+        List<Produto> lista = service.consultar();
+        return ResponseEntity.status(HttpStatus.OK).body(lista);
+    }
+    @PostMapping
+    public ResponseEntity<Produto> salvar(@RequestBody Produto produto){
+        Produto prod = service.salvar(produto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(prod);
+    }
+    @GetMapping("/{idproduto}")
+    public ResponseEntity<Produto> consultarById(@PathVariable("idproduto") Long idproduto){
+       return  ResponseEntity.ok().body(service.consultarById(idproduto));
+    }
+
+  /*
     @Autowired
     ProdutoRepository repo;
     @GetMapping
@@ -48,10 +68,10 @@ public class ProdutoController {
         try{
             Produto prod = repo.findById(idproduto).get();
             if(prod != null){
-               /* prod.setDescricao(produto.getDescricao());
-                prod.setPreco(produto.getPreco());
-                prod.setEstoque(produto.getEstoque());
-                repo.save(prod);*/
+               // prod.setDescricao(produto.getDescricao());
+               // prod.setPreco(produto.getPreco());
+              //  prod.setEstoque(produto.getEstoque());
+              //  repo.save(prod);
                 produto.setId(idproduto);
                 repo.save(produto);
             }
@@ -74,5 +94,6 @@ public class ProdutoController {
        catch (Exception e) {
            return ResponseEntity.ok().body("Produto não existe.");
        }
-    }
+    }*/
+
 }

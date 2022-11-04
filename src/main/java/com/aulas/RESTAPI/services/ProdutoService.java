@@ -1,0 +1,41 @@
+package com.aulas.RESTAPI.services;
+
+import com.aulas.RESTAPI.entidades.Produto;
+import com.aulas.RESTAPI.repositories.ProdutoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
+@Service
+public class ProdutoService {
+    @Autowired
+    ProdutoRepository produtoRepository;
+
+    public List<Produto> consultar(){
+        return  produtoRepository.findAll();
+    }
+
+    public Produto consultarById(Long id){
+      Optional<Produto> obj = produtoRepository.findById(id);
+      Produto prod = null;// obj.orElseThrow(()-> new EntityNotFoundException("Produto não encontrado"));
+        try{
+             prod = obj.get();
+        }
+        catch (NoSuchElementException e){
+            throw new EntityNotFoundException("Produto não encontrado");
+        }
+      return prod;
+    }
+    @Transactional
+    public Produto salvar(Produto produto){
+        return produtoRepository.save(produto);
+    }
+
+
+
+}
