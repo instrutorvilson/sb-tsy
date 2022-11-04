@@ -1,5 +1,8 @@
 package com.aulas.RESTAPI.controllers;
 
+import com.aulas.RESTAPI.entidades.Produto;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,8 +25,8 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public String salvar(@RequestBody String produto){
-        return produto;
+    public ResponseEntity<Produto> salvar(@RequestBody Produto produto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(produto);
     }
 
     @PutMapping("/{idproduto}")
