@@ -42,8 +42,37 @@ public class ProdutoController {
     }
 
     @PutMapping("/{idproduto}")
-    public ResponseEntity<Produto> alterar(@PathVariable("idproduto") Long idproduto,
+    public ResponseEntity<Object> alterar(@PathVariable("idproduto") Long idproduto,
                           @RequestBody Produto produto){
-       return ResponseEntity.ok().body(repo.save(produto));
+       //return ResponseEntity.ok().body(repo.save(produto));
+        try{
+            Produto prod = repo.findById(idproduto).get();
+            if(prod != null){
+               /* prod.setDescricao(produto.getDescricao());
+                prod.setPreco(produto.getPreco());
+                prod.setEstoque(produto.getEstoque());
+                repo.save(prod);*/
+                produto.setId(idproduto);
+                repo.save(produto);
+            }
+            return ResponseEntity.ok().body(produto);
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não existe.");
+        }
+    }
+
+    @DeleteMapping("/{idproduto}")
+    public ResponseEntity<String> excluir(@PathVariable("idproduto") Long idproduto){
+       try{
+           Produto prod = repo.findById(idproduto).get();
+           if(prod != null){
+               repo.delete(prod);
+           }
+           return ResponseEntity.ok().body("Produto excluído com sucesso.");
+       }
+       catch (Exception e) {
+           return ResponseEntity.ok().body("Produto não existe.");
+       }
     }
 }
