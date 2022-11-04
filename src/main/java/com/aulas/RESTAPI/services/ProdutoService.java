@@ -33,9 +33,19 @@ public class ProdutoService {
     }
     @Transactional
     public Produto salvar(Produto produto){
+        //validações
         return produtoRepository.save(produto);
     }
 
+    public Produto alterar(Long idproduto, Produto produto){
+        Produto prod = this.consultarById(idproduto);
+
+        prod.setDescricao(produto.getDescricao());
+        prod.setPreco(produto.getPreco());
+        prod.setEstoque(produto.getEstoque());
+
+        return this.salvar(prod);
+    }
 
 
 }

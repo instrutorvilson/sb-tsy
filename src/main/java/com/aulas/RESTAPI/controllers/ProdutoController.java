@@ -31,6 +31,12 @@ public class ProdutoController {
        return  ResponseEntity.ok().body(service.consultarById(idproduto));
     }
 
+    @PutMapping("/{idproduto}")
+    public ResponseEntity<Object> alterar(@PathVariable("idproduto") Long idproduto,
+                                          @RequestBody Produto produto){
+        return ResponseEntity.status(HttpStatus.OK).body(service.alterar(idproduto, produto));
+    }
+
   /*
     @Autowired
     ProdutoRepository repo;
