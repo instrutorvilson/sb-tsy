@@ -7,16 +7,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/produtos") //http://localhost:8080/produtos
 public class ProdutoController {
-
     @Autowired
     ProdutoRepository repo;
-
     @GetMapping
-    public String ola(){
-        return "Hello world.";
+    public ResponseEntity<List<Produto>> consultarProdutos(){
+        List<Produto> lista = repo.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(lista);
+    }
+    @GetMapping("/{idproduto}")
+    public ResponseEntity<Produto> consultarById(@PathVariable("idproduto") Long idproduto){
+       Produto prod = repo.findById(idproduto).get();
+       return  ResponseEntity.ok().body(prod);
     }
 
     @GetMapping("/categorias") //http://localhost:8080/produtos/categorias
@@ -36,8 +42,8 @@ public class ProdutoController {
     }
 
     @PutMapping("/{idproduto}")
-    public String alterar(@PathVariable("idproduto") String idproduto,
-                          @RequestBody String produto){
-        return "Id produto: " + idproduto + " Produto: " + produto;
+    public ResponseEntity<Produto> alterar(@PathVariable("idproduto") Long idproduto,
+                          @RequestBody Produto produto){
+       return ResponseEntity.ok().body(repo.save(produto));
     }
 }
