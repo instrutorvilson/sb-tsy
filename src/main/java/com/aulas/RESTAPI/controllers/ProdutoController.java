@@ -1,9 +1,6 @@
 package com.aulas.RESTAPI.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/produtos") //http://localhost:8080/produtos
@@ -22,5 +19,16 @@ public class ProdutoController {
     @GetMapping("/categorias/{nomeCategoria}")
     public String consultarByCategoria(@PathVariable("nomeCategoria") String categoria){
         return "vc consultou pela categoria:  " + categoria ;
+    }
+
+    @PostMapping
+    public String salvar(@RequestBody String produto){
+        return produto;
+    }
+
+    @PutMapping("/{idproduto}")
+    public String alterar(@PathVariable("idproduto") String idproduto,
+                          @RequestBody String produto){
+        return "Id produto: " + idproduto + " Produto: " + produto;
     }
 }
