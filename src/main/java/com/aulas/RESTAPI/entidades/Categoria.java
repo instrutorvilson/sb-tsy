@@ -11,6 +11,8 @@ public class Categoria {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private long id;
     private String descricao;
+    @Column(columnDefinition = "varchar(10) default 'ATIVA'")
+    @Enumerated(EnumType.STRING)
     private CategoriaStatus status;
 
     public long getId() {

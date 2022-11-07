@@ -1,7 +1,10 @@
 package com.aulas.RESTAPI.services;
 
 import com.aulas.RESTAPI.entidades.Categoria;
+import com.aulas.RESTAPI.entidades.Produto;
+import com.aulas.RESTAPI.enums.CategoriaStatus;
 import com.aulas.RESTAPI.repositories.CategoriaRepository;
+import com.aulas.RESTAPI.repositories.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,9 @@ import java.util.Optional;
 public class CategoriaService {
     @Autowired
     CategoriaRepository categoriaRepository;
+
+    @Autowired
+    ProdutoRepository produtoRepository;
 
     @Transactional
     public Categoria salvar(Categoria categoria){
@@ -40,7 +46,14 @@ public class CategoriaService {
     }
     public void excluir(Long idcategoria) {
         Categoria cat = this.consultarById(idcategoria);
-        categoriaRepository.delete(cat);
+
+        List<Produto> lista = produtoRepository.findByCategoria(cat);
+        if(lista.size() > 0){
+           cat.setStatus(CategoriaStatus.INATIVA);
+           categoriaRepository.save(cat);
+        }else{
+            categoriaRepository.delete(cat);
+        }
     }
 }
 
