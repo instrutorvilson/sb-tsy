@@ -16,7 +16,8 @@ public class CategoriaController {
     CategoriaService categoriaService;
 
      @GetMapping
-     public ResponseEntity<List<Categoria>> consultar(@RequestParam("status") String status){
+     public ResponseEntity<List<Categoria>> consultar(@RequestParam(value = "status",
+             defaultValue = "") String status){
          return ResponseEntity.status(HttpStatus.OK).body(categoriaService.consultar(status));
      }
 
