@@ -27,7 +27,13 @@ public class CategoriaService {
         return categoriaRepository.save(categoria);
     }
 
-    public List<Categoria> consultar(){
+    public List<Categoria> consultar(String status){
+        if(status.equalsIgnoreCase("ATIVA")) {
+            return categoriaRepository.findCategorias(CategoriaStatus.ATIVA);
+        }
+        if(status.equalsIgnoreCase("INATIVA")) {
+            return categoriaRepository.findCategorias(CategoriaStatus.INATIVA);
+        }
         return categoriaRepository.findAll();
     }
 
