@@ -1,7 +1,11 @@
 package com.aulas.RESTAPI.services;
 
+import com.aulas.RESTAPI.entidades.Categoria;
 import com.aulas.RESTAPI.entidades.Produto;
+import com.aulas.RESTAPI.enums.CategoriaStatus;
+import com.aulas.RESTAPI.repositories.CategoriaRepository;
 import com.aulas.RESTAPI.repositories.ProdutoRepository;
+import com.aulas.RESTAPI.services.excpetions.CategoriaInativaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +19,9 @@ import java.util.Optional;
 public class ProdutoService {
     @Autowired
     ProdutoRepository produtoRepository;
+
+    @Autowired
+    CategoriaService categoriaService;
 
     public List<Produto> consultar(){
         return  produtoRepository.findAll();
@@ -33,10 +40,13 @@ public class ProdutoService {
     }
     @Transactional
     public Produto salvar(Produto produto){
-        //validações
+        Categoria cat = categoriaService.consultarById(produto.getCategoria().getId());
+
+        if(cat.getStatus() == CategoriaStatus.INATIVA){
+            throw new CategoriaInativaException("Categoria inativa");
+        }
         return produtoRepository.save(produto);
     }
-
     public Produto alterar(Long idproduto, Produto produto){
         Produto prod = this.consultarById(idproduto);
 

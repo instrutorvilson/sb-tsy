@@ -6,6 +6,11 @@ https://howtodoinjava.com/hibernate/hibernate-many-to-many-mapping/
 
 https://howtodoinjava.com/hibernate/hibernate-one-to-many-mapping/
 
+https://www.baeldung.com/spring-data-jpa-query
+
+https://www.tutorialspoint.com/spring_boot_jpa/spring_boot_jpa_named_queries.htm
+
+
 @OneToOne
 
 @OneToMany
@@ -13,3 +18,7 @@ https://howtodoinjava.com/hibernate/hibernate-one-to-many-mapping/
 @ManyToOne
 
 @ManyToMany
+
+Ao inserir, ou alterar um produto não permitir informar uma categoria inativa.
+
+criar enpoint para listar somente categorias ativas.
