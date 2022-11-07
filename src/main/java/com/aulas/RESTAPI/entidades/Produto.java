@@ -16,6 +16,9 @@ public class Produto {
     private Float preco;
     private Float estoque;
 
+    @ManyToOne
+    private Categoria categoria;
+
     public long getId() {
         return id;
     }
@@ -46,5 +49,13 @@ public class Produto {
 
     public void setEstoque(Float estoque) {
         this.estoque = estoque;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }
