@@ -36,4 +36,11 @@ public class CategoriaController {
          return ResponseEntity.status(HttpStatus.OK).body(categoriaService.alterar(idcategoria, categoria));
      }
 
+     @DeleteMapping("/{idcategoria}")
+    public ResponseEntity<Void> excluir(@PathVariable("idcategoria") Long idcategoria){
+        categoriaService.excluir(idcategoria);
+        return  ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+     }
+
+
 }

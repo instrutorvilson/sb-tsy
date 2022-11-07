@@ -38,6 +38,9 @@ public class CategoriaService {
 
         return this.salvar(cat);
     }
-
+    public void excluir(Long idcategoria) {
+        Categoria cat = this.consultarById(idcategoria);
+        categoriaRepository.delete(cat);
+    }
 }
 
