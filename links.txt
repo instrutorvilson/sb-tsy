@@ -1,0 +1,15 @@
+https://www.baeldung.com/spring-boot-bean-validation
+
+https://howtodoinjava.com/hibernate/hibernate-one-to-one-mapping/
+
+https://howtodoinjava.com/hibernate/hibernate-many-to-many-mapping/
+
+https://howtodoinjava.com/hibernate/hibernate-one-to-many-mapping/
+
+@OneToOne
+
+@OneToMany
+
+@ManyToOne
+
+@ManyToMany
