@@ -1,5 +1,6 @@
 package com.aulas.RESTAPI.controllers;
 
+import com.aulas.RESTAPI.dtos.ProdutoDTO;
 import com.aulas.RESTAPI.entidades.Produto;
 import com.aulas.RESTAPI.repositories.ProdutoRepository;
 import com.aulas.RESTAPI.services.ProdutoService;
@@ -23,9 +24,8 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.OK).body(lista);
     }
     @PostMapping
-    public ResponseEntity<Produto> salvar(@Valid @RequestBody Produto produto){
-        Produto prod = service.salvar(produto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(prod);
+    public ResponseEntity<ProdutoDTO> salvar(@Valid @RequestBody ProdutoDTO produtoDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(produtoDTO));
     }
     @GetMapping("/{idproduto}")
     public ResponseEntity<Produto> consultarById(@PathVariable("idproduto") Long idproduto){

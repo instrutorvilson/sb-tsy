@@ -1,5 +1,6 @@
 package com.aulas.RESTAPI.services;
 
+import com.aulas.RESTAPI.dtos.ProdutoDTO;
 import com.aulas.RESTAPI.entidades.Categoria;
 import com.aulas.RESTAPI.entidades.Produto;
 import com.aulas.RESTAPI.enums.CategoriaStatus;
@@ -39,13 +40,21 @@ public class ProdutoService {
       return prod;
     }
     @Transactional
-    public Produto salvar(Produto produto){
-        Categoria cat = categoriaService.consultarById(produto.getCategoria().getId());
+    public ProdutoDTO salvar(ProdutoDTO produtoDTO){
+        Categoria cat = categoriaService.consultarById(produtoDTO.getCategoria().getId());
 
         if(cat.getStatus() == CategoriaStatus.INATIVA){
             throw new CategoriaInativaException("Categoria inativa");
         }
-        return produtoRepository.save(produto);
+        Produto prod = new Produto();
+        prod.setDescricao(produtoDTO.getDescricao());
+        prod.setPreco(produtoDTO.getPreco());
+        prod.setEstoque(produtoDTO.getEstoque());
+        prod.setCategoria(produtoDTO.getCategoria());
+
+        Produto entidadeProduto = produtoRepository.save(prod);
+        ProdutoDTO retornoDTO = new ProdutoDTO(entidadeProduto);
+        return retornoDTO;
     }
     public Produto alterar(Long idproduto, Produto produto){
         Produto prod = this.consultarById(idproduto);
@@ -53,8 +62,8 @@ public class ProdutoService {
         prod.setDescricao(produto.getDescricao());
         prod.setPreco(produto.getPreco());
         prod.setEstoque(produto.getEstoque());
-
-        return this.salvar(prod);
+        return  null;
+       // return this.salvar(prod);
     }
     @Transactional
     public void excluir(Long idproduto){
