@@ -1,5 +1,7 @@
 package com.aulas.RESTAPI.entidades;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -20,10 +22,11 @@ public class Produto {
     @ManyToOne
     private Categoria categoria;
 
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    @Column(columnDefinition = "DATETIME")
     private Instant createdAt;
 
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    //@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    @Column(columnDefinition = "DATETIME")
     private Instant updatedAt;
 
     @PrePersist
@@ -81,5 +84,4 @@ public class Produto {
     public Instant getUpdatedAt() {
         return updatedAt;
     }
-
 }

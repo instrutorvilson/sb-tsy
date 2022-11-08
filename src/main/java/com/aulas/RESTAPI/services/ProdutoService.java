@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -24,11 +25,21 @@ public class ProdutoService {
     @Autowired
     CategoriaService categoriaService;
 
-    public List<Produto> consultar(){
-        return  produtoRepository.findAll();
+    public List<ProdutoDTO> consultar(){
+        List<Produto> lista = produtoRepository.findAll();
+        List<ProdutoDTO> listaDTO = new ArrayList<>();
+        for(Produto prod : lista){
+            listaDTO.add(new ProdutoDTO(prod));
+        }
+        return  listaDTO;
     }
 
-    public Produto consultarById(Long id){
+    private Produto consultar(Long id){
+        Optional<Produto> obj = produtoRepository.findById(id);
+        Produto prod = obj.orElseThrow(()-> new EntityNotFoundException("Produto não encontrado"));
+        return prod;
+    }
+    public ProdutoDTO consultarById(Long id){
       Optional<Produto> obj = produtoRepository.findById(id);
       Produto prod = null;// obj.orElseThrow(()-> new EntityNotFoundException("Produto não encontrado"));
         try{
@@ -37,7 +48,7 @@ public class ProdutoService {
         catch (NoSuchElementException e){
             throw new EntityNotFoundException("Produto não encontrado");
         }
-      return prod;
+      return new ProdutoDTO(prod);
     }
     @Transactional
     public ProdutoDTO salvar(ProdutoDTO produtoDTO){
@@ -57,7 +68,7 @@ public class ProdutoService {
         return retornoDTO;
     }
     public Produto alterar(Long idproduto, Produto produto){
-        Produto prod = this.consultarById(idproduto);
+        Produto prod = this.consultar(idproduto);
 
         prod.setDescricao(produto.getDescricao());
         prod.setPreco(produto.getPreco());
@@ -67,7 +78,7 @@ public class ProdutoService {
     }
     @Transactional
     public void excluir(Long idproduto){
-        Produto prod = this.consultarById(idproduto);
+        Produto prod = this.consultar(idproduto);
         produtoRepository.delete(prod);
     }
 

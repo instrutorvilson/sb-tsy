@@ -19,16 +19,15 @@ public class ProdutoController {
     @Autowired
     ProdutoService service;
     @GetMapping
-    public ResponseEntity<List<Produto>> consultarProdutos(){
-        List<Produto> lista = service.consultar();
-        return ResponseEntity.status(HttpStatus.OK).body(lista);
+    public ResponseEntity<List<ProdutoDTO>> consultarProdutos(){
+        return ResponseEntity.status(HttpStatus.OK).body(service.consultar());
     }
     @PostMapping
     public ResponseEntity<ProdutoDTO> salvar(@Valid @RequestBody ProdutoDTO produtoDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(produtoDTO));
     }
     @GetMapping("/{idproduto}")
-    public ResponseEntity<Produto> consultarById(@PathVariable("idproduto") Long idproduto){
+    public ResponseEntity<ProdutoDTO> consultarById(@PathVariable("idproduto") Long idproduto){
        return  ResponseEntity.ok().body(service.consultarById(idproduto));
     }
 
