@@ -3,6 +3,7 @@ package com.aulas.RESTAPI.entidades;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.Instant;
 
 @Entity
 @Table(name = "Tb_produto")
@@ -19,6 +20,20 @@ public class Produto {
     @ManyToOne
     private Categoria categoria;
 
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant createdAt;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant updatedAt;
+
+    @PrePersist
+    public void prePersit(){
+        createdAt = Instant.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        updatedAt = Instant.now();
+    }
     public long getId() {
         return id;
     }
@@ -58,4 +73,13 @@ public class Produto {
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
 }
