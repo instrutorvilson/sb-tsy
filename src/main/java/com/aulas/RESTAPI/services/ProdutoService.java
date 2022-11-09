@@ -8,6 +8,9 @@ import com.aulas.RESTAPI.repositories.CategoriaRepository;
 import com.aulas.RESTAPI.repositories.ProdutoRepository;
 import com.aulas.RESTAPI.services.excpetions.CategoriaInativaException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -24,6 +27,12 @@ public class ProdutoService {
 
     @Autowired
     CategoriaService categoriaService;
+
+    public Page<ProdutoDTO> consultaPaginada(Pageable pageable){
+        Page<Produto>  pageProduto = produtoRepository.findAll(pageable);
+        Page<ProdutoDTO> pageProdutoDto = pageProduto.map(prod -> new ProdutoDTO(prod));
+        return pageProdutoDto;
+    }
 
     public List<ProdutoDTO> consultar(){
         List<Produto> lista = produtoRepository.findAll();

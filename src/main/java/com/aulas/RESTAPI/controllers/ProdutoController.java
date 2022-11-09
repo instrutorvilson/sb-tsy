@@ -5,6 +5,8 @@ import com.aulas.RESTAPI.entidades.Produto;
 import com.aulas.RESTAPI.repositories.ProdutoRepository;
 import com.aulas.RESTAPI.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,12 @@ public class ProdutoController {
 
     @Autowired
     ProdutoService service;
+
+    @GetMapping("/paginado")
+    public ResponseEntity<Page<ProdutoDTO>> consultarPageProdutos(Pageable pageable){
+        return ResponseEntity.status(HttpStatus.OK).body(service.consultaPaginada(pageable));
+    }
+
     @GetMapping
     public ResponseEntity<List<ProdutoDTO>> consultarProdutos(){
         return ResponseEntity.status(HttpStatus.OK).body(service.consultar());
