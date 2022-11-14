@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -50,5 +51,13 @@ public class CategoriaControllerTests {
                                       .content(categoriaString)
                                       .contentType(MediaType.APPLICATION_JSON));
         result.andExpect(status().isCreated());
+    }
+
+    @Test
+    public void naoRetornaNadaQuandoExcluirCategoria() throws Exception {
+        ResultActions result =
+                mockMvc.perform(delete("/categorias/{idcategoria}",1L)
+                        .accept(MediaType.APPLICATION_JSON));
+        result.andExpect(status().isNoContent());
     }
 }
