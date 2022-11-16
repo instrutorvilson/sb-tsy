@@ -1,6 +1,7 @@
 package com.aulas.RESTAPI.entidades;
 
 import com.aulas.RESTAPI.enums.CategoriaStatus;
+import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.*;
 
