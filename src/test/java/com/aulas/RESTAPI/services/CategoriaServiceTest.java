@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/*não carrega contexto da aplicação
+* usado ao fazer testes de unidade
+*/
+
 @ExtendWith(SpringExtension.class)
 public class CategoriaServiceTest {
     @InjectMocks //recurso a ser testado

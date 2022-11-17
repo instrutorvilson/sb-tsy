@@ -24,6 +24,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/*
+* @AutoConfigureMockMvc
+* Carrega o contexto da aplicação na camada web
+* instancia um servidor
+* */
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CategoriaControllerTests {
@@ -74,8 +79,9 @@ public class CategoriaControllerTests {
         String categoriaString = objectMapper.writeValueAsString(categoria);
         ResultActions result = mockMvc.perform(post("/categorias")
                 .header("Authorization", "Bearer " + token)
-                                      .content(categoriaString)
-                                      .contentType(MediaType.APPLICATION_JSON));
+                .content(categoriaString)
+                .contentType(MediaType.APPLICATION_JSON));
+
         result.andExpect(status().isCreated());
         result.andExpect(jsonPath("$.descricao").exists());
         result.andExpect(jsonPath("$.descricao").value("Cereal"));
