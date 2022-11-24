@@ -20,7 +20,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private JwtTokenStore tokenStore;
 
-    private static final String[] PUBLIC = {"/oauth/token","/h2-console/**","/usuarios"};
+    private static final String[] PUBLIC = {"/oauth/token","/h2-console/**","/usuarios",};
     private static final String[] ADMIN = {"/categorias"};
     private static final String[] USUARIO = {"/produtos"};
 
@@ -34,7 +34,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         if(Arrays.asList(env.getActiveProfiles()).contains("test")){
             http.headers().frameOptions().disable();
         }
-        http.authorizeRequests()
+        http.cors().and().authorizeRequests()
             .antMatchers(PUBLIC).permitAll()
             .antMatchers(HttpMethod.GET, USUARIO).hasRole("USUARIO")
             .antMatchers(HttpMethod.POST, USUARIO).hasRole("ADMIN")
