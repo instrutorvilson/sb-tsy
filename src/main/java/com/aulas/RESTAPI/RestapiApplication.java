@@ -16,7 +16,7 @@ public class RestapiApplication extends SpringBootServletInitializer {
 		SpringApplication.run(RestapiApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
@@ -27,6 +27,6 @@ public class RestapiApplication extends SpringBootServletInitializer {
 						.allowedHeaders("*");
 			}
 		};
-	}
+	}*/
 	/*https://stackoverflow.com/questions/40418441/spring-security-cors-filter*/
 }
