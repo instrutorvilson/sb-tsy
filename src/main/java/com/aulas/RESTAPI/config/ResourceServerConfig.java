@@ -27,7 +27,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private JwtTokenStore tokenStore;
 
-    private static final String[] PUBLIC = {"/oauth/token","/h2-console/**"};
+    private static final String[] PUBLIC = {"/oauth/token","/h2-console/**","/swagger-ui/**","/v3/api-docs/**"};
     private static final String[] ADMIN = {"/categorias", "/usuarios"};
     private static final String[] USUARIO = {"/produtos"};
 
@@ -41,15 +41,15 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         if(Arrays.asList(env.getActiveProfiles()).contains("test")){
             http.headers().frameOptions().disable();
         }
+         http.authorizeRequests()
+                .antMatchers(PUBLIC).permitAll()
+                .antMatchers(HttpMethod.GET, USUARIO).hasRole("USUARIO")
+                .antMatchers(HttpMethod.POST, USUARIO).hasRole("ADMIN")
+                .antMatchers(ADMIN).hasRole("ADMIN")
+                .anyRequest().authenticated();
+            http.cors().configurationSource(corsConfigurationSource());
+    }
 
-        http.authorizeRequests()
-            .antMatchers(PUBLIC).permitAll()
-            .antMatchers(HttpMethod.GET, USUARIO).hasRole("USUARIO")
-            .antMatchers(HttpMethod.POST, USUARIO).hasRole("ADMIN")
-            .antMatchers(ADMIN).hasRole("ADMIN")
-            .anyRequest().authenticated();
-        http.cors().configurationSource(corsConfigurationSource());
-}
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
